@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>AudioNode Visualizer</title>
+    <meta name="title" content="AudioNode Visualizer" />
+    <meta name="description" content="under construction" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div id="start">
+      <div id="start-prompt">
+        Start AudioContext
+      </div>
+    </div>
+    <div id="app">
+      <div id="node-select">
+        <button class="nodelist-option" id="analyzer">Analyzer Node</button>
+        <button class="nodelist-option" id="eq">Biquad Filter Node</button>
+        <button class="nodelist-option" id="source-k">Constant Source Node</button>
+        <button class="nodelist-option" id="delay">Delay Node</button>
+        <button class="nodelist-option" id="compressor">Dynamics Compressor Node</button>
+        <button class="nodelist-option" id="gain">Gain Node</button>
+        <button class="nodelist-option" id="oscillator">Oscillator Node</button>
+        <button class="nodelist-option" id="pan">Stereo Panner Node</button>
+      </div>
+      <div id="nodemap-view">
+        <canvas id="grid" height="3200" width="3200">Upgrade your browser.</canvas>
+        <canvas id="nodes" height="3200" width="3200"></canvas>
+        <canvas id="connections" height="3200" width="3200"></canvas>
+        <canvas id="UI" height="3200" width="3200"></canvas>
+      </div>
+    </div>
+  </body>
+  <script src="./scripts/canvas.js"></script>
+  <script src="./scripts/nodes.js"></script>
+  <script src="./scripts/events.js"></script>
+</html>
