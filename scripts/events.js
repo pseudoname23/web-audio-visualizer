@@ -36,12 +36,12 @@ for(let i = 0; i < $class('nodelist-option').length; ++i) {
   };
 //  
 // Event handlers for node placement
-function placeNode() {
-  alert(`Placed node of id ${selectedOption}`);
+function placeNode(x, y) {
+  new (kNodeConstructorList[selectedOption])(x, y)
   deselectCurrentOption();
   };
-//
-UI.addEventListener('pointerup', () => {
-  if (selectedOption !== null) placeNode();
+UI.addEventListener('pointerdown', event => {
+  fillCircle(nodeMapContext, event.offsetX, event.offsetY, 50)
+  //if (selectedOption !== null) placeNode();
   });
 //

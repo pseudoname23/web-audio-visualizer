@@ -39,8 +39,8 @@ class Destination {
     this.node = audioContext.destination;
     this.inwardConnections = [];
     nodes.push(this);
-  };};
-//
+  };
+};
 class Parameter {
   constructor(parent, param) {
     this.param = param;
@@ -48,19 +48,19 @@ class Parameter {
     this.inwardConnections = [];
     parent.params.push(this);
   };
-  };
-//
+};
+
+
 class Analyser {
-  constructor() {
+  constructor(x, y) {
     this.node = new AnalyserNode(audioContext);
     this.id = nodes.length;
     this.inwardConnections = [];
     this.outwardConnections = [];
+    this.bounds = [x, y, 100, 100]
     nodes.push(this);
   };
- };
-//
-
+};
 class BiquadFilter {
   constructor() {
     this.node = new BiquadFilterNode(audioContext);
@@ -74,9 +74,7 @@ class BiquadFilter {
     new Parameter(this, this.node.gain);
     nodes.push(this);
   };
-  }
-//
-
+}
 class ConstantSource {
   constructor() {
     this.node = new ConstantSourceNode(audioContext);
@@ -87,9 +85,7 @@ class ConstantSource {
     new Parameter(this, this.node.offset);
     nodes.push(this);
   };
-  }
-//
-
+}
 class Delay {
   constructor() {
     this.node = new DelayNode(audioContext);
@@ -101,8 +97,6 @@ class Delay {
     nodes.push(this);
   };
 }
-
-
 class DynamicsCompressor {
   constructor() {
     this.node = new DynamicsCompressorNode(audioContext);
@@ -118,8 +112,6 @@ class DynamicsCompressor {
     nodes.push(this);
   };
 }
-
-
 class Gain {
   constructor() {
     this.node = new GainNode(audioContext);
@@ -131,8 +123,6 @@ class Gain {
     nodes.push(this);
   };
 }
-
-
 class Oscillator {
   constructor() {
     this.node = new OscillatorNode(audioContext);
@@ -145,8 +135,6 @@ class Oscillator {
     nodes.push(this);
   };
 }
-
-
 class StereoPanner {
   constructor() {
     this.node = new StereoPannerNode(audioContext);
@@ -159,3 +147,6 @@ class StereoPanner {
   };
 }
 
+const kNodeConstructorList = [
+  Analyser, BiquadFilter, ConstantSource, Delay, DynamicsCompressor, Gain, Oscillator, StereoPanner
+]
