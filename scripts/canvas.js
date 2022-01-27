@@ -65,17 +65,73 @@ gridImage: {
 let nodeMap = $('nodes');
 let nodeMapContext = nodeMap.getContext('2d');
 nodeMapContext.fillStyle = '#FF0000';
-Analyser.prototype.draw = function(){};
-BiquadFilter.prototype.draw = function(){};
+function drawParam (context, color, x, y){
+  context.save();
+  context.fillStyle = color;
+  fillCircle(context, x, y, 20);
+  context.fillStyle = '#000000';
+  context.lineWidth = 3;
+  context.stroke(); // POTENTIAL PROBLEM LINE
+  context.lineWidth = 5;
+  fillCircle(context, x, y, 10);
+  line(context, x,    y-14, x,    y+14);
+  line(context, x-14, y,    x+14, y   );
+  line(context, x-10, y-10, x+10, y+10);
+  line(context, x+10, y-10, x-10, y+10);
+  context.fillStyle = color;
+  fillCircle(context, x, y, 5);
+  context.restore();
+};
+Analyser.prototype.draw = function(){
+  // 3 base circles
+  nodeMapContext.fillStyle = this.color;
+  fillCircle(nodeMapContext, this.center[0], this.center[1], this.bounds[3]/2);
+  fillCircle(nodeMapContext, this.bounds[0]+15, this.center[1], 15);
+  fillCircle(nodeMapContext, this.bounds[0]+this.bounds[2]-15, this.center[1], 15);
+
+  // Eye
+  nodeMapContext.fillStyle = '#FFFFFF';
+  nodeMapContext.beginPath();
+  nodeMapContext.arc(this.center[0], this.bounds[1]+15, 50, 0.75, 2.35); // These were carefully measured.
+  nodeMapContext.arc(this.center[0], this.bounds[1]+this.bounds[3]-15, 50, 3.93, 5.5); // DO NOT TOUCH!!!!
+  nodeMapContext.fill(); // White
+  nodeMapContext.fillStyle = '#000000';
+  nodeMapContext.lineWidth = 3;
+  nodeMapContext.stroke(); // Border
+  fillCircle(nodeMapContext, this.center[0], this.center[1], 15); // Pupil
+
+  // In/out text and border
+  line(nodeMapContext, this.bounds[0]+15, this.center[1]-9, this.bounds[0]+15, this.center[1]+9);
+  strokeCircle(nodeMapContext, this.bounds[0]+this.bounds[2]-15, this.center[1], 8);
+  strokeCircle(nodeMapContext, this.center[0], this.center[1], this.bounds[3]/2);
+};
+BiquadFilter.prototype.draw = function(){
+  nodeMapContext.fillStyle = this.color; // Base of node and I/O ports
+  nodeMapContext.fillRect(this.innerBounds[0], this.innerBounds[1], this.innerBounds[2], this.innerBounds[3]);
+  fillCircle(nodeMapContext, this.bounds[0]+15, this.center[1], 15);
+  fillCircle(nodeMapContext, this.bounds[0]+this.bounds[2]-15, this.center[1], 15);
+
+  nodeMapContext.fillStyle = '#000000';
+  nodeMapContext.lineWidth = 3; // Node borders and I/O text
+  line(nodeMapContext, this.bounds[0]+15, this.center[1]-9, this.bounds[0]+15, this.center[1]+9);
+  strokeCircle(nodeMapContext, this.bounds[0]+this.bounds[2]-15, this.center[1], 8);
+  nodeMapContext.strokeRect(this.innerBounds[0], this.innerBounds[1], this.innerBounds[2], this.innerBounds[3]);
+
+  // Params
+  drawParam(nodeMapContext, this.color, this.center[0]+25, this.bounds[1]+20);
+  drawParam(nodeMapContext, this.color, this.center[0]-25, this.bounds[1]+this.bounds[3]-20);
+  drawParam(nodeMapContext, this.color, this.center[0]-75, this.bounds[1]+20);
+  drawParam(nodeMapContext, this.color, this.center[0]+75, this.bounds[1]+this.bounds[3]-20);
+};
 ConstantSource.prototype.draw = function(){};
 Delay.prototype.draw = function(){};
 DynamicsCompressor.prototype.draw = function(){};
 Gain.prototype.draw = function(){};
 Oscillator.prototype.draw = function(){};
 StereoPanner.prototype.draw = function(){};
-for(let Node of kNodeConstructorList) {
+/*for(let Node of kNodeConstructorList) {
   Node.prototype.erase = function() {}
-}
+}*/
 
 
 ////////////////////////
