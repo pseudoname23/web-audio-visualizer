@@ -18,5 +18,5 @@ function isWithin(x, y, box) {
 } // Why does this work. I hate myself
 
 function doesGithubDoItsJobNow() {
-  return true;
+  return;
 }
