@@ -20,3 +20,6 @@ function isWithin(x, y, box) {
 function doesGlitchPull() {
   return true;
 }
+function isGlitchGood() {
+  return false;
+}
