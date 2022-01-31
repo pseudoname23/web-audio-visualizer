@@ -16,13 +16,3 @@ function HEXtoRGBA(hex, a) {
 function isWithin(x, y, box) {
   return (x>box[0]?(y>box[1]?(x-box[0]<box[2]?(y-box[1]<box[3]):false):false):false)
 } // Why does this work. I hate myself
-
-function doesGlitchPull() {
-  return true;
-}
-function isGlitchGood() {
-  return false;
-}
-function iHateGit() {
-  return 'Nobody likes Git';
-}
