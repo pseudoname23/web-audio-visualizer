@@ -23,3 +23,6 @@ function doesGlitchPull() {
 function isGlitchGood() {
   return false;
 }
+function iHateGit() {
+  return 'Nobody likes Git';
+}
