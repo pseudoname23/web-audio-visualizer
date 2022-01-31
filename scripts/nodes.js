@@ -1,7 +1,5 @@
 const nodes = [];
-
-const paramHitboxes = [];
-const nodeHitboxes = [];
+const hitboxes = [];
 
 const connect = function(origin, target) {
   if (target instanceof ConstantSource) {
@@ -34,10 +32,23 @@ const connect = function(origin, target) {
     target.inwardConnections.push(origin.id);
     return;
   }
-}
+};
+const isConnected = function(origin, target) {
+  return (!!(origin.outwardConnections.indexOf(target.id)+1) && !!(target.inwardConnections.indexOf(origin.id)+1));
+};
+const disconnect = function(origin, _target) {
+  if ((_target ?? true)===true) {
+
+  } else {
+    
+  }
+};
 
 class Destination {
-  constructor() {
+  constructor(x, y) {
+    this.center = [x, y];
+    this.bounds = [x-160, y-100, 260, 200];
+    this.innerBounds = [x-100, y-100, 200, 200];
     this.id = 0;
     this.node = audioContext.destination;
     this.inwardConnections = [];
@@ -53,7 +64,7 @@ class Parameter {
     this.id = parent.params.length + (parent.id * 1000);
     this.inwardConnections = [];
     parent.params.push(this);
-    paramHitboxes.push([this.center[0]-20, this.center[1]-20, 40, 40, this.id]);
+    hitboxes.splice(0, 0, [this.center[0]-20, this.center[1]-20, 40, 40, this.id]);
   };
 };
 
@@ -71,7 +82,7 @@ class Analyser {
     this.id = nodes.length;
     this.node = new AnalyserNode(audioContext);
     nodes.push(this);
-    nodeHitboxes.push([this.innerBounds[0], this.innerBounds[1], this.innerBounds[2], this.innerBounds[3], this.id]);
+    hitboxes.splice(0, 0, [this.innerBounds[0], this.innerBounds[1], this.innerBounds[2], this.innerBounds[3], this.id]);
   };
 };
 class BiquadFilter {
@@ -89,6 +100,7 @@ class BiquadFilter {
     this.outwardConnections = [];
 
     // Functional
+    hitboxes.splice(0, 0, [this.innerBounds[0], this.innerBounds[1], this.innerBounds[2], this.innerBounds[3], this.id]);
     this.node = new BiquadFilterNode(audioContext);
     this.params = [];
     new Parameter(this, this.node.frequency, 25, -50);
@@ -96,7 +108,6 @@ class BiquadFilter {
     new Parameter(this, this.node.Q,        -75, -50);
     new Parameter(this, this.node.gain,      75,  50);
     nodes.push(this);
-    nodeHitboxes.push([this.innerBounds[0], this.innerBounds[1], this.innerBounds[2], this.innerBounds[3], this.id]);
   };
 }
 class ConstantSource {
@@ -112,11 +123,11 @@ class ConstantSource {
     this.outwardConnections = []; //
 
     // Functional //
+    hitboxes.splice(0, 0, [this.innerBounds[0], this.innerBounds[1], this.innerBounds[2], this.innerBounds[3], this.id]);
     this.node = new ConstantSourceNode(audioContext);
     this.params = [];
     new Parameter(this, this.node.offset, -50, 0);
     nodes.push(this);
-    nodeHitboxes.push([this.innerBounds[0], this.innerBounds[1], this.innerBounds[2], this.innerBounds[3], this.id]);
   };
 }
 class Delay {

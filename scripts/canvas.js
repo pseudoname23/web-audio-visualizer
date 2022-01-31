@@ -32,8 +32,8 @@ function clearCircle (ctx , centerX,centerY , radius) {
 // GRID CANVAS //
 /////////////////
 
-let grid = $('grid');
-let gridContext = grid.getContext('2d');
+const grid = $('grid');
+const gridContext = grid.getContext('2d');
 
 gridImage: {
 let patternCanvas = document.createElement('canvas');
@@ -58,8 +58,30 @@ gridContext.fillRect(0, 0, grid.width, grid.height);
 // NODES CANVAS //
 //////////////////
 
-let nodeMap = $('nodes');
-let nodeMapContext = nodeMap.getContext('2d');
+const nodeMap = $('nodes');
+const nodeMapContext = nodeMap.getContext('2d');
+Destination.prototype.draw = function(context) {
+  context.fillStyle = '#000000';
+  context.strokeStyle = '#000000';
+  context.lineWidth = 3;
+  context.beginPath();
+  context.moveTo(this.center[0], this.center[1]+100);
+  context.lineTo(this.center[0], this.center[1]-100);
+  context.lineTo();   //
+  context.lineTo();   //
+  context.lineTo();   // Speaker
+  context.lineTo();   //
+  context.lineTo();   //
+  context.fill();     //
+  context.beginPath();      //
+  context.moveTo();         //
+  context.arc();            // Sound lines
+  context.arc();            //
+  context.arc();            //
+  context.stroke();         //
+  fillCircle(context); //
+  line(context);       // Input
+};
 Parameter.prototype.draw = function(context){
   context.save();
   context.fillStyle = this.color;
@@ -164,8 +186,8 @@ StereoPanner.prototype.draw = function(){};
 // CONNECTIONS CANVAS //
 ////////////////////////
 
-let connections = $('connections');
-let connectionsContext = connections.getContext('2d');
+const connections = $('connections');
+const connectionsContext = connections.getContext('2d');
 
 
 
@@ -174,5 +196,5 @@ let connectionsContext = connections.getContext('2d');
 ///////////////////////////
 // (note: this canvas is the target of all PointerEvents)
 
-let UI = $('UI');
-let UIContext = UI.getContext('2d');
+const UI = $('UI');
+const UIContext = UI.getContext('2d');

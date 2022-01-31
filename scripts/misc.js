@@ -13,6 +13,6 @@ function HEXtoRGBA(hex, a) {
   let b = parseInt(hex.substring(5), 16);
   return `rgba(${r}, ${g}, ${b}, ${a})`
 };
-function isWithin(mouseX, mouseY, hitbox) {
-  return (mouseX>hitbox[0]?(mouseY>hitbox[1]?(mouseX-hitbox[0]<hitbox[2]?(mouseY-hitbox[1]<hitbox[3]):false):false):false)
+function isWithin(x, y, box) {
+  return (x>box[0]?(y>box[1]?(x-box[0]<box[2]?(y-box[1]<box[3]):false):false):false)
 } // Why does this work. I hate myself
